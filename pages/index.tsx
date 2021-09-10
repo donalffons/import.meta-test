@@ -5,6 +5,16 @@ import { useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    // this works...
+    const myWorker1 = new Worker(new URL('../test.js', import.meta.url));
+    myWorker1.postMessage("hey, how's it going?");
+
+    // ...this does not (creates an HTTP 404 Error)
+    const myUrl2 = new URL('../test.js', import.meta.url);
+    const myWorker2 = new Worker(myUrl2);
+    myWorker2.postMessage("hey, how's it going?");
+  }, []);
   return (
     <div className={styles.container}>
       <Head>
